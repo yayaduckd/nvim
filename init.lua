@@ -90,7 +90,7 @@ lsp_zero.on_attach(function(client, buffer)
         group = augroup,
         buffer = buffer,
         callback = function()
-            vim.lsp.buf.format()
+            --   vim.lsp.buf.format()
         end,
     })
 end)
@@ -98,9 +98,10 @@ end)
 -- MASON
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'rust_analyzer', 'zls', 'clangd', 'pyright' },
+    ensure_installed = { 'rust_analyzer', 'zls', 'clangd', 'pyright', 'tsserver' },
     handlers = {
         lsp_zero.default_setup,
+
     },
     server_options
 })
@@ -114,6 +115,10 @@ require 'lspconfig'.lua_ls.setup {
             },
         },
     },
+}
+
+require 'lspconfig'.tsserver.setup {
+
 }
 
 -- LSP ZERO EXTRA KEYBINDS
