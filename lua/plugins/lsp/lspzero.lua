@@ -3,7 +3,6 @@ return {
     branch = 'v3.x',
     init = function()
         local lsp_zero = require('lsp-zero')
-        lsp_zero.extend_lspconfig()
         lsp_zero.on_attach(function(client, buffer)
             -- see :help lsp-zero-keybindings
             -- to learn the available actions

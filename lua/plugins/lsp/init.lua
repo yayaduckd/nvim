@@ -1,10 +1,10 @@
 local lspzero = require('plugins.lsp.lspzero')
 
 return {
+    lspzero,
     require('plugins.lsp.conform'),
     require('plugins.lsp.lspconfig'),
-    { 'williamboman/mason.nvim', opts = {} },
-    lspzero,
+    { 'williamboman/mason.nvim', opts={}}, -- opts required to ensure setup
     {
         'williamboman/mason-lspconfig.nvim',
         opts = {
