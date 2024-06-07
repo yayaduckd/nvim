@@ -19,5 +19,9 @@ return {
             filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
             root_dir = lspconfig.util.root_pattern('compile_commands.json', 'compile_flags.txt', '.git'),
         }
+
+        lspconfig.tsserver.setup {
+            filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+        }
     end,
 }
