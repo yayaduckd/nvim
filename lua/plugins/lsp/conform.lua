@@ -24,6 +24,7 @@ return {
             -- Use a sub-list to run only the first available formatter
             typescript = { { "prettierd", "prettier" } },
             typescriptreact = { { "prettierd", "prettier" } },
+            c = { "clang-format" },
             -- You can use a function here to determine the formatters dynamically
             -- python = function(bufnr)
             --     if require("conform").get_formatter_info("ruff_format", bufnr).available then
@@ -103,8 +104,8 @@ return {
         --        end,
         --    },
     },
-    init = function()
-        -- If you want the formatexpr, here is the place to set it
-        vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-    end,
+    --  init = function()
+    --      -- If you want the formatexpr, here is the place to set it
+    --      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+    --  end,
 }
