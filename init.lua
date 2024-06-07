@@ -71,14 +71,17 @@ require('lazy').setup({
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' }
     },
-    --{ 'arkav/lualine-lsp-progress.nvim', lazy = false },
+    {
+        'linrongbin16/lsp-progress.nvim',
+        config = function()
+            require('lsp-progress').setup()
+        end
+    },
     {
         'wakatime/vim-wakatime',
         lazy = false
     }
 })
-
-require('config.conform')
 
 -- LSP ZERO
 local lsp_zero = require('lsp-zero')
@@ -170,8 +173,10 @@ require("lualine").setup {
     },
     sections = {
         lualine_c = {
-            'lsp_progress'
-        }
+            function()
+                return require('lsp-progress').progress()
+            end,
+        },
     }
 }
 
