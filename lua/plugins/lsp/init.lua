@@ -4,7 +4,15 @@ return {
     lspzero,
     require('plugins.lsp.conform'),
     require('plugins.lsp.lspconfig'),
-    { 'williamboman/mason.nvim', opts={}}, -- opts required to ensure setup
+    {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        opts = {
+            enable_autocmd = false,
+        }
+
+    },
+    require('plugins.lsp.treesitter'),
+    { 'williamboman/mason.nvim', opts = {} },                    -- opts required to ensure setup
     {
         'williamboman/mason-lspconfig.nvim',
         opts = {
