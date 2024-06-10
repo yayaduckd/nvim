@@ -23,5 +23,9 @@ return {
         lspconfig.tsserver.setup {
             filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
         }
+
+        lspconfig.pyright.setup {
+            filetypes = { 'python' },
+        }
     end,
 }
