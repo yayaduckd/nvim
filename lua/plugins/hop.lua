@@ -5,11 +5,11 @@ return {
         keys = 'etovxqpdygfblzhckisuran'
     },
     keys = {
-        { "<leader>c", "<cmd>HopChar1<cr>", desc = "Hop | Char 1" },
-        { "<leader>C", "<cmd>HopChar1<cr>", desc = "Hop | Char 1" },
-        { "<leader>l", "<cmd>HopLine<cr>", desc = "Hop | Line" },
-        { "<leader>w", "<cmd>HopWord<cr>", desc = "Hop | Word" },
-        { "<leader>s", "<cmd>HopPattern<cr>", desc = "Hop | Pattern" },
+        { "<leader>c", "<cmd>HopChar1<cr>", mode = "", desc = "Hop | Char 1" },
+        { "<leader>C", "<cmd>HopChar1<cr>", mode = "", desc = "Hop | Char 1" },
+        { "<leader>l", "<cmd>HopLine<cr>", mode = "", desc = "Hop | Line" },
+        { "<leader>w", "<cmd>HopWord<cr>", mode = "", desc = "Hop | Word" },
+        { "<leader>s", "<cmd>HopPattern<cr>", mode = "", desc = "Hop | Pattern" },
     }
 }
         --[[ { "<leader>ff", "<cmd>Telescope find_files<cr>",            desc = "Telescope | Files" },
