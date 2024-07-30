@@ -27,5 +27,9 @@ return {
         lspconfig.pyright.setup {
             filetypes = { 'python' },
         }
+
+        lspconfig.zls.setup {
+            filetypes = { 'zig' },
+        }
     end,
 }
