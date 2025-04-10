@@ -16,6 +16,8 @@ vim.opt.shiftwidth = 4
 -- makes sure that files containing tabs look the sames as ones using 4 spaces
 vim.opt.tabstop = 4
 
+vim.opt.mousescroll = "ver:1,hor:1" -- scroll vertically
+
 -- (existing files can be converted to these settings with :retab)
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

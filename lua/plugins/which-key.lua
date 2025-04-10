@@ -9,25 +9,21 @@ return {
         vim.keymap.set('ca', 'wk', 'WhichKey')
 
         local harpoon = require("harpoon")
+        wk.add(
+            {
+                { "<leader>h", group = "harpoon" },
+                { "<leader>h1", function () harpoon:list():select(1) end, desc = "Buffer 1" },
+                { "<leader>h2", function () harpoon:list():select(2) end, desc = "Buffer 2" },
+                { "<leader>h3", function () harpoon:list():select(3) end, desc = "Buffer 3" },
+                { "<leader>h4", function () harpoon:list():select(4) end, desc = "Buffer 4" },
+                { "<leader>h<C-S-N>", function() harpoon:list():prev() end, desc = "Next Buffer" },
+                { "<leader>h<C-S-P>", function() harpoon:list():next() end, desc = "Previous Buffer" },
+                { "<leader>he", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "Show Harpoon List" },
 
-        wk.register({
-            h = {
-                name = "harpoon",
-                e = { function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, "Show Harpoon List" },
-                ["1"] = { function() harpoon:list():select(1) end, "Buffer 1" },
-                ["2"] = { function() harpoon:list():select(2) end, "Buffer 2" },
-                ["3"] = { function() harpoon:list():select(3) end, "Buffer 3" },
-                ["4"] = { function() harpoon:list():select(4) end, "Buffer 4" },
-                ["<C-S-P>"] = { function() harpoon:list():prev() end, "Previous Buffer" },
-                ["<C-S-N>"] = { function() harpoon:list():next() end, "Next Buffer" },
-            },
-        }, { prefix = "<leader>" })
+                { "<leader>a", desc = "Harpoon | Append current file" },
+            }
+        )
 
-        wk.register({
-            a = {
-                "Harpoon | Append current file",
-            },
-        }, { prefix = "<leader>" })
     end,
     opts = {
         -- your configuration comes here

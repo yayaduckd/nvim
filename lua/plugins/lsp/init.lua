@@ -16,7 +16,7 @@ return {
     {
         'williamboman/mason-lspconfig.nvim',
         opts = {
-            ensure_installed = { 'rust_analyzer', 'zls', 'clangd', 'pyright', 'tsserver' },
+            ensure_installed = { 'rust_analyzer', 'zls', 'clangd', 'pyright' },
             handlers = {
                 lspzero.default_setup,
 
