@@ -21,7 +21,7 @@ return {
                 "dist",
                 "venv",
                 "__pycache__",
-                "build",
+                "build/",
             }
         }
     },
