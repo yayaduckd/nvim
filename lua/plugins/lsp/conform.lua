@@ -23,8 +23,8 @@ return {
 			--go = { "goimports", "gofmt" },
 			-- Use a sub-list to run only the first available formatter
 			zig = { "zig fmt" },
-			typescript = { { "prettierd", "prettier" } },
-			typescriptreact = { { "prettierd", "prettier" } },
+			typescript = { "prettierd", "prettier", stop_after_first = true },
+			typescriptreact = { "prettierd", "prettier", stop_after_first = true },
 			c = { "clang-format" },
 			-- You can use a function here to determine the formatters dynamically
 			python = function(bufnr)
