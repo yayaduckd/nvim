@@ -24,8 +24,8 @@ return {
             filetypes = { "python" },
         })
 
-        vim.lsp.config("zls", {
-            filetypes = { "zig" },
-        })
+        -- vim.lsp.config("zls", {
+        --     filetypes = { "zig" },
+        -- })
     end,
 }
