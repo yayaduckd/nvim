@@ -1,6 +1,5 @@
 return {
     'VonHeikemen/lsp-zero.nvim',
-    branch = 'v3.x',
     init = function()
         local lsp_zero = require('lsp-zero')
         lsp_zero.on_attach(function(client, buffer)

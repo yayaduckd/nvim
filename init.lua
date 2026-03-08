@@ -18,6 +18,11 @@ vim.opt.tabstop = 4
 
 vim.opt.mousescroll = "ver:1,hor:1" -- scroll vertically
 
+-- vim.diagnostic.enable()
+-- vim.diagnostic.config({
+--     virtual_lines = true,
+-- })
+
 -- (existing files can be converted to these settings with :retab)
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

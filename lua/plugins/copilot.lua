@@ -1,32 +1,35 @@
 return {
-	"zbirenbaum/copilot.lua",
-	cmd = "Copilot",
-	event = "InsertEnter",
-	build = ":Copilot auth",
-	opts = {
-		suggestion = {
-			auto_trigger = false,
-			keymap = {
-				accept = "<M-Tab>",
-				prev = "<M-[>",
-				next = "<M-]>",
-				dismiss = "<C-Tab>",
-			},
-		},
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    build = ":Copilot auth",
+    opts = {
+        suggestion = {
+            auto_trigger = false,
+            keymap = {
+                accept = "<M-Tab>",
+                prev = "<M-[>",
+                next = "<M-]>",
+                dismiss = "<C-Tab>",
+            },
+        },
 
-		panel = {
-			auto_refresh = false,
-			keymap = {
-				accept = "<CR>",
-				jump_prev = "[[",
-				jump_next = "]]",
-				refresh = "gr",
-				open = "<M-CR>",
-			},
-		},
-		filetypes = {
-			markdown = true,
-			help = true,
-		},
-	},
+        panel = {
+            auto_refresh = false,
+            keymap = {
+                accept = "<CR>",
+                jump_prev = "[[",
+                jump_next = "]]",
+                refresh = "gr",
+                open = "<M-CR>",
+            },
+        },
+        filetypes = {
+            markdown = true,
+            help = true,
+        },
+    },
+    server_opts_overrides = {
+        offset_encoding = "utf-16" -- Set the offset encoding same as above, see `:h vim.lsp.start` for more info
+    }
 }
