@@ -29,7 +29,7 @@ return {
     },
     build = ':TSUpdate',
     config = function()
-        require("nvim-treesitter.configs").setup {
+        require("nvim-treesitter.config").setup {
             ensure_installed = { 'rust', 'javascript' },
             -- highlight = { enable = true, }
         }
