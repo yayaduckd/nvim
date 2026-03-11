@@ -16,7 +16,16 @@ vim.opt.shiftwidth = 4
 -- makes sure that files containing tabs look the sames as ones using 4 spaces
 vim.opt.tabstop = 4
 
-vim.opt.mousescroll = "ver:1,hor:1" -- scroll vertically
+vim.opt.mousescroll = "ver:4,hor:5" -- scroll vertically
+-- Enable mouse support in all modes
+vim.opt.mouse = 'a'
+
+-- Normal, Visual, Select, and Operator-pending mode mappings
+vim.keymap.set({ 'n', 'v', 'o' }, '<C-c>', '"+y', { noremap = true })
+vim.keymap.set({ 'n', 'v', 'o' }, '<C-v>', '"+p', { noremap = true })
+vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true })
+vim.keymap.set('i', '<C-v>', '<C-r>+', { noremap = true })
+vim.keymap.set('i', '<C-V>', '<C-r>+', { noremap = true })
 
 vim.diagnostic.enable()
 -- vim.diagnostic.config({
@@ -24,6 +33,15 @@ vim.diagnostic.enable()
 -- })
 
 -- (existing files can be converted to these settings with :retab)
+
+if vim.g.neovide then
+    vim.api.nvim_set_keymap("n", "<C-+>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>",
+        { silent = true })
+    vim.api.nvim_set_keymap("n", "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>",
+        { silent = true })
+    vim.api.nvim_set_keymap("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>", { silent = true })
+end
+
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
