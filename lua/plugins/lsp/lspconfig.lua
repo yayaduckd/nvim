@@ -1,31 +1,34 @@
 return {
-    "neovim/nvim-lspconfig",
-    init = function()
-        require("lsp-zero").extend_lspconfig()
-        -- local lspconfig = require("lspconfig")
-        vim.lsp.config("lua_ls", {
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = { "vim" },
-                    },
-                },
-            },
-        })
+	"neovim/nvim-lspconfig",
+	config = function()
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		-- require("lspconfig").clangd.setup({ capabilities = capabilities })
+		require("lsp-zero").extend_lspconfig()
+		-- local lspconfig = require("lspconfig")
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = { "vim" },
+					},
+				},
+			},
+		})
 
-        vim.lsp.config("clangd", {
-            cmd = { "clangd", "--background-index", "--offset-encoding=utf-16" },
-            filetypes = { "c", "cpp", "objc", "objcpp" },
-            -- root_dir = lspconfig.util.root_pattern('compile_commands.json', 'compile_flags.txt', '.git'),
-        })
+		vim.lsp.config("clangd", {
+			cmd = { "clangd", "--background-index", "--offset-encoding=utf-16" },
+			filetypes = { "c", "cpp", "objc", "objcpp" },
+			-- root_dir = lspconfig.util.root_pattern('compile_commands.json', 'compile_flags.txt', '.git'),
+		})
 
-        vim.lsp.config("pyright", {
-            filetypes = { "python" },
-        })
+		vim.lsp.config("pyright", {
+			filetypes = { "python" },
+		})
 
-        -- vim.lsp.config("zls", {
-        --     filetypes = { "zig" },
-        -- })
-    end,
+		vim.lsp.config("zls", {
+			filetypes = { "zig" },
+			capabilities = capabilities,
+		})
+	end,
 }

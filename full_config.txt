@@ -1,0 +1,1165 @@
+return {
+  "numToStr/Comment.nvim",
+  config = function()
+    local prehook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+    require("Comment").setup({
+      padding = true,
+      sticky = true,
+      ignore = "^$",
+      toggler = {
+        line = "gcc",
+        block = "gbc",
+      },
+      opleader = {
+        line = "gc",
+        block = "gb",
+      },
+      extra = {
+        above = "gcO",
+        below = "gco",
+        eol = "gcA",
+      },
+      mappings = {
+        basic = true,
+        extra = true,
+        extended = false,
+      },
+      pre_hook = prehook,
+      post_hook = nil,
+    })
+  end,
+  event = "BufReadPre",
+  lazy = false,
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+    "JoosepAlviste/nvim-ts-context-commentstring",
+  },
+}
+
+return {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    init = function()
+        local harpoon = require("harpoon")
+        -- HARPOON KEYBINDS
+        vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+        vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+        -- quickly jump to a buffer
+        vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end)
+        vim.keymap.set("n", "<C-2>", function() harpoon:list():select(2) end)
+        vim.keymap.set("n", "<C-3>", function() harpoon:list():select(3) end)
+        vim.keymap.set("n", "<C-4>", function() harpoon:list():select(4) end)
+        -- toggle previous and next buffers stored within Harpoon list
+        vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+        vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+    end,
+    opts = {},
+}
+return {
+    "rebelot/kanagawa.nvim",
+    init = function()
+        vim.cmd("colorscheme kanagawa")
+    end,
+    opts = {
+        transparent = true,
+        commentStyle = { italic = false },
+        keywordStyle = { italic = false },
+        overrides = function()
+            return {
+                ["@variable.builtin"] = { italic = false },
+            }
+        end
+    },
+}
+return {
+    'smoka7/hop.nvim',
+    version = "*",
+    opts = {
+        keys = 'etovxqpdygfblzhckisuran'
+    },
+    keys = {
+        { "<leader>c", "<cmd>HopChar1<cr>", mode = "", desc = "Hop | Char 1" },
+        { "<leader>C", "<cmd>HopChar1<cr>", mode = "", desc = "Hop | Char 1" },
+        { "<leader>l", "<cmd>HopLine<cr>", mode = "", desc = "Hop | Line" },
+        { "<leader>w", "<cmd>HopWord<cr>", mode = "", desc = "Hop | Word" },
+        { "<leader>s", "<cmd>HopPattern<cr>", mode = "", desc = "Hop | Pattern" },
+    }
+}
+        --[[ { "<leader>ff", "<cmd>Telescope find_files<cr>",            desc = "Telescope | Files" },
+        { "<leader>fg", "<cmd>Telescope live_grep<cr>",             desc = "Telescope | Grep" },
+        { "<leader>fb", "<cmd>Telescope buffers<cr>",               desc = "Telescope | Buffers" },
+        { "<leader>fh", "<cmd>Telescope help_tags<cr>",             desc = "Telescope | Help Tags" },
+
+        { "gd",         "<cmd>Telescope lsp_definitions<cr>",       desc = "Telescope | LSP Definitions" },
+        { "gD",         "<cmd>Telescope lsp_implementations<cr>",   desc = "Telescope | LSP Implementations" },
+        { "gr",         "<cmd>Telescope lsp_references<cr>",        desc = "Telescope | LSP References" },
+        { "gi",         "<cmd>Telescope lsp_document_symbols<cr>",  desc = "Telescope | LSP Document Symbols" },
+        { "gI",         "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Telescope | LSP Workspace Symbols" }, ]]
+return {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+        vim.o.timeout = true
+        vim.o.timeoutlen = 300
+
+        local wk = require("which-key")
+        vim.keymap.set('ca', 'wk', 'WhichKey')
+
+        local harpoon = require("harpoon")
+        wk.add(
+            {
+                { "<leader>h", group = "harpoon" },
+                { "<leader>h1", function () harpoon:list():select(1) end, desc = "Buffer 1" },
+                { "<leader>h2", function () harpoon:list():select(2) end, desc = "Buffer 2" },
+                { "<leader>h3", function () harpoon:list():select(3) end, desc = "Buffer 3" },
+                { "<leader>h4", function () harpoon:list():select(4) end, desc = "Buffer 4" },
+                { "<leader>h<C-S-N>", function() harpoon:list():prev() end, desc = "Next Buffer" },
+                { "<leader>h<C-S-P>", function() harpoon:list():next() end, desc = "Previous Buffer" },
+                { "<leader>he", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "Show Harpoon List" },
+
+                { "<leader>a", desc = "Harpoon | Append current file" },
+            }
+        )
+
+    end,
+    opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+    }
+}
+return {
+  "folke/trouble.nvim",
+  opts = {
+      -- modes = {
+      --   diagnostics = { auto_open = true },
+      -- }
+      modes = {
+        preview_float = {
+          mode = "diagnostics",
+          preview = {
+            type = "float",
+            relative = "editor",
+            border = "rounded",
+            title = "Preview",
+            title_pos = "center",
+            position = { 0, -2 },
+            size = { width = 0.3, height = 0.3 },
+            zindex = 200,
+          },
+        },
+      },
+  },
+  cmd = "Trouble",
+  keys = {
+    {
+      "<leader>xx",
+      "<cmd>Trouble diagnostics toggle<cr>",
+      desc = "Diagnostics (Trouble)",
+    },
+    {
+      "<leader>xX",
+      "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      desc = "Buffer Diagnostics (Trouble)",
+    },
+    {
+      "<leader>xs",
+      "<cmd>Trouble symbols toggle focus=false<cr>",
+      desc = "Symbols (Trouble)",
+    },
+    {
+      "<leader>xl",
+      "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+      desc = "LSP Definitions / references / ... (Trouble)",
+    },
+    {
+      "<leader>xL",
+      "<cmd>Trouble loclist toggle<cr>",
+      desc = "Location List (Trouble)",
+    },
+    {
+      "<leader>xQ",
+      "<cmd>Trouble qflist toggle<cr>",
+      desc = "Quickfix List (Trouble)",
+    },
+  },
+}
+return {
+    'VonHeikemen/lsp-zero.nvim',
+    init = function()
+        local lsp_zero = require('lsp-zero')
+        lsp_zero.on_attach(function(client, buffer)
+            -- see :help lsp-zero-keybindings
+            -- to learn the available actions
+            lsp_zero.default_keymaps({ buffer = buffer })
+
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = buffer })
+        end)
+        -- LSP ZERO EXTRA KEYBINDS
+        local cmp = require('cmp')
+        local cmp_action = lsp_zero.cmp_action()
+        cmp.setup({
+            mapping = cmp.mapping.preset.insert({
+                -- `Enter` key to confirm completion
+                ['<CR>'] = cmp.mapping.confirm({ select = false }),
+
+                -- Ctrl+Space to trigger completion menu
+                ['<C-Space>'] = cmp.mapping.complete(),
+
+                -- Navigate between snippet placeholder
+                ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+                ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+
+                -- Scroll up and down in the completion documentation
+                ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-d>'] = cmp.mapping.scroll_docs(4),
+            })
+        })
+    end,
+}
+return {
+	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
+	cmd = { "ConformInfo" },
+	keys = {
+		{
+			-- Customize or remove this keymap to your liking
+			"<leader>v",
+			function()
+				require("conform").format({ async = true, lsp_fallback = true })
+			end,
+			mode = "",
+			desc = "Format buffer",
+		},
+	},
+	-- Everything in opts will be passed to setup()
+	opts = {
+
+		-- Map of filetype to formatters
+		formatters_by_ft = {
+			lua = { "stylua" },
+			-- Conform will run multiple formatters sequentially
+			--go = { "goimports", "gofmt" },
+			-- Use a sub-list to run only the first available formatter
+			zig = { "zigfmt" },
+			typescript = { "prettierd", "prettier", stop_after_first = true },
+			typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+			c = { "clang-format" },
+			-- You can use a function here to determine the formatters dynamically
+			python = function(bufnr)
+				if require("conform").get_formatter_info("ruff_format", bufnr).available then
+					return { "isort", "ruff_format" }
+				else
+					return { "isort", "black" }
+				end
+			end,
+			-- Use the "*" filetype to run formatters on all filetypes.
+			-- ["*"] = { "codespell" },
+			-- Use the "_" filetype to run formatters on filetypes that don't
+			-- have other formatters configured.
+			["_"] = { "trim_whitespace" },
+		},
+		--    -- If this is set, Conform will run the formatter on save.
+		--    -- It will pass the table to conform.format().
+		--    -- This can also be a function that returns the table.
+		format_on_save = {
+			-- I recommend these options. See :help conform.format for details.
+			lsp_fallback = true,
+			timeout_ms = 500,
+		},
+		--    -- If this is set, Conform will run the formatter asynchronously after save.
+		--    -- It will pass the table to conform.format().
+		--    -- This can also be a function that returns the table.
+		--    format_after_save = {
+		--        lsp_fallback = true,
+		--    },
+		--    -- Set the log level. Use `:ConformInfo` to see the location of the log file.
+		--    log_level = vim.log.levels.ERROR,
+		--    -- Conform will notify you when a formatter errors
+		--    notify_on_error = true,
+		--    -- Custom formatters and overrides for built-in formatters
+		--    formatters = {
+		--        my_formatter = {
+		--            -- This can be a string or a function that returns a string.
+		--            -- When defining a new formatter, this is the only field that is required
+		--            command = "my_cmd",
+		--            -- A list of strings, or a function that returns a list of strings
+		--            -- Return a single string instead of a list to run the command in a shell
+		--            args = { "--stdin-from-filename", "$FILENAME" },
+		--            -- If the formatter supports range formatting, create the range arguments here
+		--            range_args = function(self, ctx)
+		--                return { "--line-start", ctx.range.start[1], "--line-end", ctx.range["end"][1] }
+		--            end,
+		--            -- Send file contents to stdin, read new contents from stdout (default true)
+		--            -- When false, will create a temp file (will appear in "$FILENAME" args). The temp
+		--            -- file is assumed to be modified in-place by the format command.
+		--            stdin = true,
+		--            -- A function that calculates the directory to run the command in
+		--            cwd = require("conform.util").root_file({ ".editorconfig", "package.json" }),
+		--            -- When cwd is not found, don't run the formatter (default false)
+		--            require_cwd = true,
+		--            -- When stdin=false, use this template to generate the temporary file that gets formatted
+		--            tmpfile_format = ".conform.$RANDOM.$FILENAME",
+		--            -- When returns false, the formatter will not be used
+		--            condition = function(self, ctx)
+		--                return vim.fs.basename(ctx.filename) ~= "README.md"
+		--            end,
+		--            -- Exit codes that indicate success (default { 0 })
+		--            exit_codes = { 0, 1 },
+		--            -- Environment variables. This can also be a function that returns a table.
+		--            env = {
+		--                VAR = "value",
+		--            },
+		--            -- Set to false to disable merging the config with the base definition
+		--            inherit = true,
+		--            -- When inherit = true, add these additional arguments to the command.
+		--            -- This can also be a function, like args
+		--            prepend_args = { "--use-tabs" },
+		--        },
+		--        -- These can also be a function that returns the formatter
+		--        other_formatter = function(bufnr)
+		--            return {
+		--                command = "my_cmd",
+		--            }
+		--        end,
+		--    },
+	},
+	--  init = function()
+	--      -- If you want the formatexpr, here is the place to set it
+	--      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+	--  end,
+}
+return {
+	"nvim-treesitter/nvim-treesitter",
+	opts = {
+		--[[ context_commentstring = {
+            config = {
+                javascript = {
+                    __default = '// %s',
+                    jsx_element = '{/* %s */}',
+                    jsx_fragment = '{/* %s */}',
+                    jsx_attribute = '// %s',
+                    comment = '// %s',
+                },
+                typescript = {
+                    __default = '// %s',
+                    __multiline = '/* %s */',
+                    jsx_element = '{/* %s */}',
+                    jsx_fragment = '{/* %s */}',
+                    jsx_attribute = '// %s',
+                    comment = '// %s',
+                    tsx_element = '{/* %s */}',
+                    tsx_fragment = '{/* %s */}',
+                    tsx_attribute = '// %s',
+                },
+            },
+        } ]]
+	},
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter-textobjects",
+	},
+	build = ":TSUpdate",
+	config = function()
+		require("nvim-treesitter.config").setup({
+			ensure_installed = { "rust", "javascript" },
+			-- highlight = { enable = true, }
+		})
+	end,
+}
+return {
+	"neovim/nvim-lspconfig",
+	init = function()
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		-- require("lspconfig").clangd.setup({ capabilities = capabilities })
+		require("lsp-zero").extend_lspconfig()
+		-- local lspconfig = require("lspconfig")
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = { "vim" },
+					},
+				},
+			},
+		})
+
+		vim.lsp.config("clangd", {
+			cmd = { "clangd", "--background-index", "--offset-encoding=utf-16" },
+			filetypes = { "c", "cpp", "objc", "objcpp" },
+			-- root_dir = lspconfig.util.root_pattern('compile_commands.json', 'compile_flags.txt', '.git'),
+		})
+
+		vim.lsp.config("pyright", {
+			filetypes = { "python" },
+		})
+
+		vim.lsp.config("zls", {
+			filetypes = { "zig" },
+			capabilities = capabilities,
+		})
+	end,
+}
+local lspzero = require("plugins.lsp.lspzero")
+return {
+	lspzero,
+	require("plugins.lsp.conform"),
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		opts = { enable_autocmd = false },
+	},
+	require("plugins.lsp.treesitter"),
+	{ "williamboman/mason.nvim", opts = {} },
+
+	-- Group completion tools together so they load as a unit
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"L3MON4D3/LuaSnip",
+		},
+	},
+
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "hrsh7th/nvim-cmp" },
+		opts = {
+			ensure_installed = { "rust_analyzer", "zls", "clangd", "pyright" },
+			handlers = {
+				lspzero.default_setup,
+			},
+		},
+	},
+
+	-- Ensure your manual lspconfig runs last, after Mason and cmp are ready
+	require("plugins.lsp.lspconfig"),
+}
+return {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+        options = {
+            theme = "iceberg_dark"
+        },
+        sections = {
+            lualine_x = { 'filename', 'encoding', 'fileformat', 'filetype' },
+            lualine_c = {
+                function()
+                    return require('lsp-progress').progress()
+                end,
+            },
+        }
+    }
+}
+return {
+    "smjonas/inc-rename.nvim",
+    keys = {
+        {
+            "<leader>rn",
+            function()
+                return ":IncRename " .. vim.fn.expand("<cword>")
+            end,
+            mode = "",
+            desc = "Incremental Rename",
+        },
+    },
+    config = function()
+        vim.opt.inccommand = "split"
+        require("inc_rename").setup({
+            -- the name of the command
+            cmd_name = "IncRename",
+            -- the highlight group used for highlighting the identifier's new name
+            hl_group = "Substitute",
+            -- whether an empty new name should be previewed; if false the command preview will be cancelled instead
+            preview_empty_name = false,
+            -- whether to display a `Renamed m instances in n files` message after a rename operation
+            show_message = true,
+            -- whether to save the "IncRename" command in the commandline history (set to false to prevent issues with
+            -- navigating to older entries that may arise due to the behavior of command preview)
+            save_in_cmdline_history = true,
+            -- the type of the external input buffer to use (the only supported value is currently "dressing")
+            input_buffer_type = nil,
+            -- callback to run after renaming, receives the result table (from LSP handler) as an argument
+            post_hook = nil,
+        })
+        vim.keymap.set("n", "<leader>rn", function()
+            return ":IncRename " .. vim.fn.expand("<cword>")
+        end, { expr = true })
+    end,
+}
+return {
+  "lewis6991/gitsigns.nvim",
+  -- event = "LazyFile",
+  opts = {
+    signs = {
+      add = { text = "▎" },
+      change = { text = "▎" },
+      delete = { text = "" },
+      topdelete = { text = "" },
+      changedelete = { text = "▎" },
+      untracked = { text = "▎" },
+    },
+    signs_staged = {
+      add = { text = "▎" },
+      change = { text = "▎" },
+      delete = { text = "" },
+      topdelete = { text = "" },
+      changedelete = { text = "▎" },
+    },
+    current_line_blame = true,
+    on_attach = function(buffer)
+      local gs = package.loaded.gitsigns
+
+
+      -- init settings
+
+      local function map(mode, l, r, desc)
+        vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+      end
+
+      -- stylua: ignore start
+      map("n", "]h", function()
+        if vim.wo.diff then
+          vim.cmd.normal({ "]c", bang = true })
+        else
+          gs.nav_hunk("next")
+        end
+      end, "Next Hunk")
+      map("n", "[h", function()
+        if vim.wo.diff then
+          vim.cmd.normal({ "[c", bang = true })
+        else
+          gs.nav_hunk("prev")
+        end
+      end, "Prev Hunk")
+      map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
+      map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
+      map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+      map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+      map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
+      map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
+      map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
+      map("n", "<leader>ghp", gs.preview_hunk_inline, "Preview Hunk Inline")
+      map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+      map("n", "<leader>ghB", function() gs.blame() end, "Blame Buffer")
+      map("n", "<leader>ghd", gs.diffthis, "Diff This")
+      map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
+      map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+    end,
+  },
+}
+return {
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        cmd = "Neotree",
+        keys = {
+            {
+                "<leader>fe",
+                function()
+                    require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
+                end,
+                desc = "Explorer NeoTree (cwd)",
+            },
+            -- { "<leader>fe", "<leader>e", desc = "Explorer NeoTree (cwd)", remap = true },
+            {
+                "<leader>ge",
+                function()
+                    require("neo-tree.command").execute({ source = "git_status", toggle = true })
+                end,
+                desc = "Git Explorer",
+            },
+            {
+                "<leader>be",
+                function()
+                    require("neo-tree.command").execute({ source = "buffers", toggle = true })
+                end,
+                desc = "Buffer Explorer",
+            },
+        },
+        deactivate = function()
+            vim.cmd([[Neotree close]])
+        end,
+        init = function()
+            -- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
+            -- because `cwd` is not set up properly.
+            vim.api.nvim_create_autocmd("BufEnter", {
+                group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
+                desc = "Start Neo-tree with directory",
+                once = true,
+                callback = function()
+                    if package.loaded["neo-tree"] then
+                        return
+                    else
+                        local stats = vim.uv.fs_stat(vim.fn.argv(0))
+                        if stats and stats.type == "directory" then
+                            require("neo-tree")
+                        end
+                    end
+                end,
+            })
+        end,
+        opts = {
+            sources = { "filesystem", "buffers", "git_status" },
+            open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+            filesystem = {
+                bind_to_cwd = false,
+                follow_current_file = { enabled = true },
+                use_libuv_file_watcher = true,
+                filtered_items = {
+                    visible = true,
+                },
+            },
+            window = {
+                mappings = {
+                    ["l"] = "open",
+                    ["h"] = "close_node",
+                    ["<space>"] = "none",
+                    ["Y"] = {
+                        function(state)
+                            local node = state.tree:get_node()
+                            local path = node:get_id()
+                            vim.fn.setreg("+", path, "c")
+                        end,
+                        desc = "Copy Path to Clipboard",
+                    },
+                    ["O"] = {
+                        function(state)
+                            require("lazy.util").open(state.tree:get_node().path, { system = true })
+                        end,
+                        desc = "Open with System Application",
+                    },
+                    ["P"] = { "toggle_preview", config = { use_float = false } },
+                },
+            },
+            default_component_configs = {
+                indent = {
+                    with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+                    expander_collapsed = "",
+                    expander_expanded = "",
+                    expander_highlight = "NeoTreeExpander",
+                },
+                git_status = {
+                    symbols = {
+                        unstaged = "󰄱",
+                        staged = "󰱒",
+                    },
+                },
+            },
+        },
+        config = function(_, opts)
+            local function on_move(data)
+                Snacks.rename.on_rename_file(data.source, data.destination)
+            end
+
+            local events = require("neo-tree.events")
+            opts.event_handlers = opts.event_handlers or {}
+            vim.list_extend(opts.event_handlers, {
+                { event = events.FILE_MOVED,   handler = on_move },
+                { event = events.FILE_RENAMED, handler = on_move },
+            })
+            require("neo-tree").setup(opts)
+            vim.api.nvim_create_autocmd("TermClose", {
+                pattern = "*lazygit",
+                callback = function()
+                    if package.loaded["neo-tree.sources.git_status"] then
+                        require("neo-tree.sources.git_status").refresh()
+                    end
+                end,
+            })
+        end,
+    },
+    {
+        "antosha417/nvim-lsp-file-operations",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-neo-tree/neo-tree.nvim", -- makes sure that this loads after Neo-tree.
+            "MunifTanjim/nui.nvim",
+        },
+        config = function()
+            require("lsp-file-operations").setup()
+        end,
+    },
+    {
+        "s1n7ax/nvim-window-picker",
+        version = "2.*",
+        config = function()
+            require("window-picker").setup({
+                filter_rules = {
+                    include_current_win = false,
+                    autoselect_one = true,
+                    -- filter using buffer options
+                    bo = {
+                        -- if the file type is one of following, the window will be ignored
+                        filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                        -- if the buffer type is one of following, the window will be ignored
+                        buftype = { "terminal", "quickfix" },
+                    },
+                },
+            })
+        end,
+    },
+}
+return {
+    { 'm4xshen/autoclose.nvim' },
+    {
+        'linrongbin16/lsp-progress.nvim',
+        config = function()
+            require('lsp-progress').setup()
+        end
+    },
+    { 'wakatime/vim-wakatime', lazy = false },
+    {
+        "declancm/cinnamon.nvim",
+        version = "*", -- use latest release
+        opts = {
+            -- Enable all provided keymaps
+            keymaps = {
+                basic = true,
+                extra = true,
+            },
+            delay = 2,
+            -- Only scroll the window
+            options = { mode = "cursor" },
+        },
+    }
+}
+return {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+        { "<leader>ff", "<cmd>Telescope find_files<cr>",            desc = "Telescope | Files" },
+        { "<leader>fg", "<cmd>Telescope live_grep<cr>",             desc = "Telescope | Grep" },
+        { "<leader>fb", "<cmd>Telescope buffers<cr>",               desc = "Telescope | Buffers" },
+        { "<leader>fh", "<cmd>Telescope help_tags<cr>",             desc = "Telescope | Help Tags" },
+
+        { "gd",         "<cmd>Telescope lsp_definitions<cr>",       desc = "Telescope | LSP Definitions" },
+        { "gD",         "<cmd>Telescope lsp_implementations<cr>",   desc = "Telescope | LSP Implementations" },
+        { "gr",         "<cmd>Telescope lsp_references<cr>",        desc = "Telescope | LSP References" },
+        { "gi",         "<cmd>Telescope lsp_document_symbols<cr>",  desc = "Telescope | LSP Document Symbols" },
+        { "gI",         "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Telescope | LSP Workspace Symbols" },
+    },
+    opts = {
+        defaults = {
+            file_ignore_patterns = {
+                "node_modules",
+                "dist",
+                "venv",
+                "__pycache__",
+                "build/",
+                "modules/",
+            },
+        },
+    },
+}
+return {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    config = function()
+        require("tiny-inline-diagnostic").setup({
+            -- Choose a preset style for diagnostic appearance
+            -- Available: "modern", "classic", "minimal", "powerline", "ghost", "simple", "nonerdfont", "amongus"
+            preset = "modern",
+
+            -- Make diagnostic background transparent
+            transparent_bg = false,
+
+            -- Make cursorline background transparent for diagnostics
+            transparent_cursorline = true,
+
+            -- Customize highlight groups for colors
+            -- Use Neovim highlight group names or hex colors like "#RRGGBB"
+            hi = {
+                error = "DiagnosticError", -- Highlight for error diagnostics
+                warn = "DiagnosticWarn",   -- Highlight for warning diagnostics
+                info = "DiagnosticInfo",   -- Highlight for info diagnostics
+                hint = "DiagnosticHint",   -- Highlight for hint diagnostics
+                arrow = "NonText",         -- Highlight for the arrow pointing to diagnostic
+                background = "CursorLine", -- Background highlight for diagnostics
+                mixing_color = "Normal",   -- Color to blend background with (or "None")
+            },
+
+            -- List of filetypes to disable the plugin for
+            disabled_ft = {},
+
+            options = {
+                -- Display the source of diagnostics (e.g., "lua_ls", "pyright")
+                show_source = {
+                    enabled = false, -- Enable showing source names
+                    if_many = false, -- Only show source if multiple sources exist for the same diagnostic
+                },
+
+                -- Display the diagnostic code of diagnostics (e.g., "F401", "no-dupe-args")
+                show_code = true,
+
+                -- Use icons from vim.diagnostic.config instead of preset icons
+                use_icons_from_diagnostic = false,
+
+                -- Color the arrow to match the severity of the first diagnostic
+                set_arrow_to_diag_color = false,
+
+
+                -- Throttle update frequency in milliseconds to improve performance
+                -- Higher values reduce CPU usage but may feel less responsive
+                -- Set to 0 for immediate updates (may cause lag on slow systems)
+                throttle = 20,
+
+                -- Minimum number of characters before wrapping long messages
+                softwrap = 30,
+
+                -- Control how diagnostic messages are displayed
+                -- NOTE: When using display_count = true, you need to enable multiline diagnostics with multilines.enabled = true
+                --       If you want them to always be displayed, you can also set multilines.always_show = true.
+                add_messages = {
+                    messages = true,             -- Show full diagnostic messages
+                    display_count = false,       -- Show diagnostic count instead of messages when cursor not on line
+                    use_max_severity = false,    -- When counting, only show the most severe diagnostic
+                    show_multiple_glyphs = true, -- Show multiple icons for multiple diagnostics of same severity
+                },
+
+                -- Settings for multiline diagnostics
+                multilines = {
+                    enabled = true,           -- Enable support for multiline diagnostic messages
+                    always_show = false,      -- Always show messages on all lines of multiline diagnostics
+                    trim_whitespaces = false, -- Remove leading/trailing whitespace from each line
+                    tabstop = 4,              -- Number of spaces per tab when expanding tabs
+                    severity = nil,           -- Filter multiline diagnostics by severity (e.g., { vim.diagnostic.severity.ERROR })
+                },
+
+                -- Show all diagnostics on the current cursor line, not just those under the cursor
+                show_all_diags_on_cursorline = false,
+
+                -- Only show diagnostics when the cursor is directly over them, no fallback to line diagnostics
+                show_diags_only_under_cursor = false,
+
+                -- Display related diagnostics from LSP relatedInformation
+                show_related = {
+                    enabled = true, -- Enable displaying related diagnostics
+                    max_count = 3,  -- Maximum number of related diagnostics to show per diagnostic
+                },
+
+                -- Enable diagnostics display in insert mode
+                -- May cause visual artifacts; consider setting throttle to 0 if enabled
+                enable_on_insert = false,
+
+                -- Enable diagnostics display in select mode (e.g., during auto-completion)
+                enable_on_select = false,
+
+                -- Handle messages that exceed the window width
+                overflow = {
+                    mode = "wrap", -- "wrap": split into lines, "none": no truncation, "oneline": keep single line
+                    padding = 0,   -- Extra characters to trigger wrapping earlier
+                },
+
+                -- Break long messages into separate lines
+                break_line = {
+                    enabled = false, -- Enable automatic line breaking
+                    after = 30,      -- Number of characters before inserting a line break
+                },
+
+                -- Custom function to format diagnostic messages
+                -- Receives diagnostic object, returns formatted string
+                -- Example: function(diag) return diag.message .. " [" .. diag.source .. "]" end
+                format = nil,
+
+                -- Virtual text display priority
+                -- Higher values appear above other plugins (e.g., GitBlame)
+                virt_texts = {
+                    priority = 2048,
+                },
+
+                -- Filter diagnostics by severity levels
+                -- Remove severities you don't want to display
+                severity = {
+                    vim.diagnostic.severity.ERROR,
+                    vim.diagnostic.severity.WARN,
+                    vim.diagnostic.severity.INFO,
+                    vim.diagnostic.severity.HINT,
+                },
+
+                -- Events that trigger attaching diagnostics to buffers
+                -- Default is {"LspAttach"}; change only if plugin doesn't work with your LSP setup
+                overwrite_events = nil,
+
+                -- Automatically disable diagnostics when opening diagnostic float windows
+                override_open_float = false,
+
+                -- Experimental options, subject to misbehave in future NeoVim releases
+                experimental = {
+                    -- Make diagnostics not mirror across windows containing the same buffer
+                    -- See: https://github.com/rachartier/tiny-inline-diagnostic.nvim/issues/127
+                    use_window_local_extmarks = false,
+                },
+            },
+        })
+        vim.diagnostic.config({ virtual_text = false })
+    end,
+}
+return {
+	"mfussenegger/nvim-dap",
+	event = "VeryLazy",
+	dependencies = {
+		"rcarriga/nvim-dap-ui",
+		"nvim-neotest/nvim-nio",
+		"jay-babu/mason-nvim-dap.nvim",
+		"theHamsta/nvim-dap-virtual-text",
+	},
+	keys = {
+		{
+			"<leader>d",
+			group = "Debugger",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>dt",
+			function()
+				require("dap").toggle_breakpoint()
+			end,
+			desc = "Toggle Breakpoint",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>dc",
+			function()
+				require("dap").continue()
+			end,
+			desc = "Continue",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>di",
+			function()
+				require("dap").step_into()
+			end,
+			desc = "Step Into",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>do",
+			function()
+				require("dap").step_over()
+			end,
+			desc = "Step Over",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>du",
+			function()
+				require("dap").step_out()
+			end,
+			desc = "Step Out",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>dr",
+			function()
+				require("dap").repl.open()
+			end,
+			desc = "Open REPL",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>dl",
+			function()
+				require("dap").run_last()
+			end,
+			desc = "Run Last",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>dq",
+			function()
+				require("dap").terminate()
+				require("dapui").close()
+				require("nvim-dap-virtual-text").toggle()
+			end,
+			desc = "Terminate",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>db",
+			function()
+				require("dap").list_breakpoints()
+			end,
+			desc = "List Breakpoints",
+			nowait = true,
+			remap = false,
+		},
+		{
+			"<leader>de",
+			function()
+				require("dap").set_exception_breakpoints({ "all" })
+			end,
+			desc = "Set Exception Breakpoints",
+			nowait = true,
+			remap = false,
+		},
+	},
+	config = function()
+		local mason_dap = require("mason-nvim-dap")
+		local dap = require("dap")
+		local ui = require("dapui")
+		local dap_virtual_text = require("nvim-dap-virtual-text")
+
+		-- Dap Virtual Text
+		dap_virtual_text.setup()
+
+		mason_dap.setup({
+			ensure_installed = { "cppdbg", "codelldb" },
+			automatic_installation = true,
+			handlers = {
+				function(config)
+					require("mason-nvim-dap").default_setup(config)
+				end,
+			},
+		})
+
+		-- Configurations
+		dap.configurations = {
+			c = {
+				{
+					name = "Launch file",
+					type = "cppdbg",
+					request = "launch",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					cwd = "${workspaceFolder}",
+					stopAtEntry = false,
+					MIMode = "lldb",
+				},
+				{
+					name = "Attach to lldbserver :1234",
+					type = "cppdbg",
+					request = "launch",
+					MIMode = "lldb",
+					miDebuggerServerAddress = "localhost:1234",
+					miDebuggerPath = "/usr/bin/lldb",
+					cwd = "${workspaceFolder}",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+				},
+			},
+			zig = {
+				{
+					name = "Launch",
+					type = "codelldb",
+					request = "launch",
+					program = "${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}",
+					cwd = "${workspaceFolder}",
+					stopOnEntry = false,
+					args = {},
+				},
+			},
+		}
+
+		-- Dap UI
+
+		ui.setup()
+
+		vim.fn.sign_define("DapBreakpoint", { text = "🐞" })
+
+		dap.listeners.before.attach.dapui_config = function()
+			ui.open()
+		end
+		dap.listeners.before.launch.dapui_config = function()
+			ui.open()
+		end
+		dap.listeners.before.event_terminated.dapui_config = function()
+			ui.close()
+		end
+		dap.listeners.before.event_exited.dapui_config = function()
+			ui.close()
+		end
+	end,
+}
+-- return {
+--     "zbirenbaum/copilot.lua",
+--     cmd = "Copilot",
+--     event = "InsertEnter",
+--     build = ":Copilot auth",
+--     opts = {
+--         suggestion = {
+--             auto_trigger = false,
+--             keymap = {
+--                 accept = "<M-Tab>",
+--                 prev = "<M-[>",
+--                 next = "<M-]>",
+--                 dismiss = "<C-Tab>",
+--             },
+--         },
+
+--         panel = {
+--             auto_refresh = false,
+--             keymap = {
+--                 accept = "<CR>",
+--                 jump_prev = "[[",
+--                 jump_next = "]]",
+--                 refresh = "gr",
+--                 open = "<M-CR>",
+--             },
+--         },
+--         filetypes = {
+--             markdown = true,
+--             help = true,
+--         },
+--     },
+--     server_opts_overrides = {
+--         offset_encoding = "utf-16" -- Set the offset encoding same as above, see `:h vim.lsp.start` for more info
+--     }
+-- }
+return {}
+vim.g.mapleader = " "
+
+-- OPTIONS
+vim.opt.number = true
+
+-- set indentation to be always done with spaces
+vim.opt.expandtab = true
+
+-- set the number of spaces <Tab> and <Backspace> inserts/deletes
+vim.opt.softtabstop = 4
+
+-- set the number of spaces that are inserted when (auto)indent (example: <) is used
+vim.opt.shiftwidth = 4
+
+-- define the width of a <Tab> character
+-- makes sure that files containing tabs look the sames as ones using 4 spaces
+vim.opt.tabstop = 4
+
+vim.opt.mousescroll = "ver:1,hor:1" -- scroll vertically
+
+vim.diagnostic.enable()
+-- vim.diagnostic.config({
+--     virtual_lines = false,
+-- })
+
+-- (existing files can be converted to these settings with :retab)
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
+
+-- Shift + K for signature popup

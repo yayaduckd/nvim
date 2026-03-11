@@ -1,30 +1,37 @@
-local lspzero = require('plugins.lsp.lspzero')
-
+local lspzero = require("plugins.lsp.lspzero")
 return {
-    lspzero,
-    require('plugins.lsp.conform'),
-    require('plugins.lsp.lspconfig'),
-    {
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        opts = {
-            enable_autocmd = false,
-        }
+	lspzero,
+	require("plugins.lsp.conform"),
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		opts = { enable_autocmd = false },
+	},
+	require("plugins.lsp.treesitter"),
+	{ "williamboman/mason.nvim", opts = {} },
 
-    },
-    require('plugins.lsp.treesitter'),
-    { 'williamboman/mason.nvim', opts = {} },                    -- opts required to ensure setup
-    {
-        'williamboman/mason-lspconfig.nvim',
-        opts = {
-            ensure_installed = { 'rust_analyzer', 'zls', 'clangd', 'pyright' },
-            handlers = {
-                lspzero.default_setup,
+	-- Group completion tools together so they load as a unit
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"L3MON4D3/LuaSnip",
+		},
+	},
 
-            },
-            server_options
-        }
-    },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/nvim-cmp' },
-    { 'L3MON4D3/LuaSnip' },
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "hrsh7th/nvim-cmp" },
+		opts = {
+			ensure_installed = { "rust_analyzer", "zls", "clangd", "pyright" },
+			handlers = {
+				function(server_name)
+					require("lspconfig")[server_name].setup({
+						capabilities = require("cmp_nvim_lsp").default_capabilities(),
+					})
+				end,
+			},
+		},
+	},
+	-- Ensure your manual lspconfig runs last, after Mason and cmp are ready
+	require("plugins.lsp.lspconfig"),
 }
