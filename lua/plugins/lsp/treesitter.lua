@@ -1,7 +1,7 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
-	opts = {
-		--[[ context_commentstring = {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+        --[[ context_commentstring = {
             config = {
                 javascript = {
                     __default = '// %s',
@@ -23,15 +23,15 @@ return {
                 },
             },
         } ]]
-	},
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter-textobjects",
-	},
-	build = ":TSUpdate",
-	config = function()
-		require("nvim-treesitter.config").setup({
-			ensure_installed = { "rust", "javascript" },
-			-- highlight = { enable = true, }
-		})
-	end,
+    },
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+    build = ":TSUpdate",
+    config = function()
+        require("nvim-treesitter.configs").setup({
+            ensure_installed = { "rust", "javascript" },
+            -- highlight = { enable = true, }
+        })
+    end,
 }
